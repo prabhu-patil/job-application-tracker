@@ -50,15 +50,46 @@ Invalid transitions are blocked at the domain level.
 
 ## Running the Project
 
-1. Update database configuration in `application.properties`
-2. Run the application:
+### Prerequisites
+- Java 17+
+- Maven 3.9+
+- PostgreSQL (a database named `job_tracker_db`)
+
+### 1. Clone
+```bash
+git clone https://github.com/prabhu-patil/job-application-tracker.git
+cd job-application-tracker
 ```
+
+### 2. Configure the database
+Database settings are read from environment variables (with local-dev defaults in
+`application.properties`). Override them for your own setup:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DB_URL` | `jdbc:postgresql://localhost:5432/job_tracker_db` | JDBC connection URL |
+| `DB_USERNAME` | `postgres` | Database user |
+| `DB_PASSWORD` | `changeme` | Database password |
+
+```bash
+# Example (Linux/macOS)
+export DB_PASSWORD=your_password
+```
+
+### 3. Run
+```bash
 mvn spring-boot:run
 ```
-3. Test APIs using Postman
-Base URL:
+
+### 4. Test the API
+Use Postman or curl against the base URL:
 ```
 http://localhost:8080
+```
+```bash
+curl -X POST http://localhost:8080/api/applications \
+  -H "Content-Type: application/json" \
+  -d '{"userId": 1, "companyName": "Acme Corp", "role": "Backend Engineer"}'
 ```
 ## Highlights
 - Domain-driven status transition validation
